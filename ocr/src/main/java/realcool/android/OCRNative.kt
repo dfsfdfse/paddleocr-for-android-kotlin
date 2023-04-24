@@ -1,4 +1,4 @@
-package realcool.ocr
+package realcool.android
 
 import android.graphics.Bitmap
 import kotlin.math.roundToInt

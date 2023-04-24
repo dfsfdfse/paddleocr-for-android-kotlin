@@ -1,4 +1,4 @@
-package realcool.ocr
+package realcool.android
 
 import java.util.*
 

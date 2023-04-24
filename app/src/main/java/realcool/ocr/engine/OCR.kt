@@ -7,9 +7,9 @@ import androidx.annotation.WorkerThread
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import realcool.ocr.OCRConfig
-import realcool.ocr.OCREngine
-import realcool.ocr.exception.OCRException
+import realcool.android.OCRConfig
+import realcool.android.OCREngine
+import realcool.android.exception.OCRException
 
 class OCR(_ctx: Context) {
     private var ocr: OCREngine = OCREngine()

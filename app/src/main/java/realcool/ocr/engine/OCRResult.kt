@@ -1,7 +1,7 @@
 package realcool.ocr.engine
 
 import android.graphics.Bitmap
-import realcool.ocr.OCRResultModel
+import realcool.android.OCRResultModel
 
 data class OCRResult (
     val outputImg: Bitmap,

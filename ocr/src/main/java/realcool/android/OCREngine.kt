@@ -1,8 +1,8 @@
-package realcool.ocr
+package realcool.android
 
 import android.content.Context
 import android.graphics.*
-import realcool.ocr.exception.OCRException
+import realcool.android.exception.OCRException
 import java.io.File
 
 class OCREngine() {
