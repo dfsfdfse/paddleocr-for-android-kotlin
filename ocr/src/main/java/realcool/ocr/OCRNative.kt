@@ -31,6 +31,8 @@ class OCRNative(
         pointer = init(detModelPath, recModelPath, clsModelPath, useOpencl, threadNum, cpuPowerMode)
     }
 
+    fun isLoaded() = pointer != 0L
+
     fun exec(
         img: Bitmap,
         detLongSize: Int,
