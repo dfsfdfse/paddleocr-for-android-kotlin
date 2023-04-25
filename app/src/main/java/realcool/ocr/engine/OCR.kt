@@ -67,6 +67,28 @@ class OCR(_ctx: Context) {
         }
     }
 
+    @MainThread
+    fun detect(temp: Bitmap, origin: Bitmap, callback: OCRDetectCallback) {
+        val coroutineScope = CoroutineScope(Dispatchers.IO)
+        coroutineScope.launch(Dispatchers.IO) {
+            detectSync(temp, origin).fold(
+                {
+                    coroutineScope.launch(Dispatchers.Main) { callback.onSuccess(it) }
+                },
+                { coroutineScope.launch(Dispatchers.Main) { callback.onFail(it) } })
+        }
+    }
+
+    @WorkerThread
+    fun detectSync(temp: Bitmap, origin: Bitmap): Result<String> {
+        return if (!ocr.isLoaded()) {
+            Result.failure(OCRException("请先加载模型"))
+        } else {
+            val detect = ocr.detect(temp, origin)
+            Result.success(detect)
+        }
+    }
+
     fun release() {
         ocr.release()
     }

@@ -8,10 +8,7 @@ import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import realcool.ocr.engine.OCR
-import realcool.ocr.engine.OCRExecCallback
-import realcool.ocr.engine.OCRInitCallback
-import realcool.ocr.engine.OCRResult
+import realcool.ocr.engine.*
 
 class MainActivity : AppCompatActivity() {
     private lateinit var ocr: OCR
@@ -23,6 +20,7 @@ class MainActivity : AppCompatActivity() {
 
         val initBtn = findViewById<Button>(R.id.init_model)
         val startBtn = findViewById<Button>(R.id.start_model)
+        val startDetect = findViewById<Button>(R.id.start_detect)
         val resultImg = findViewById<ImageView>(R.id.result_img)
         val resultText = findViewById<TextView>(R.id.result_text)
 
@@ -39,6 +37,7 @@ class MainActivity : AppCompatActivity() {
                 }
             })
         }
+
         startBtn.setOnClickListener {
             resultText.text = "开始识别"
             val bitmap = BitmapFactory.decodeResource(resources, R.drawable.test4)
@@ -58,6 +57,21 @@ class MainActivity : AppCompatActivity() {
                     resultText.text = "识别失败 $e"
                 }
 
+            })
+        }
+        startDetect.setOnClickListener {
+            resultText.text = "开始检测"
+            val temp = BitmapFactory.decodeResource(resources, R.drawable.s3)
+            val origin = BitmapFactory.decodeResource(resources, R.drawable.renwu)
+            ocr.detect(temp, origin, object : OCRDetectCallback {
+                override fun onSuccess(result: String) {
+                    resultText.text = result
+                }
+
+                @SuppressLint("SetTextI18n")
+                override fun onFail(e: Throwable) {
+                    resultText.text = "识别失败 $e"
+                }
             })
         }
     }

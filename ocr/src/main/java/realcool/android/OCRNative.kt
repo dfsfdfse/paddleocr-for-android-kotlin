@@ -107,4 +107,6 @@ class OCRNative(
     ): FloatArray
 
     private external fun release(pointer: Long)
+
+    external fun detect(temp: Bitmap, origin: Bitmap): IntArray
 }

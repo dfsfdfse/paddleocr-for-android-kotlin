@@ -2,6 +2,7 @@ package realcool.android
 
 import android.content.Context
 import android.graphics.*
+import android.util.Log
 import realcool.android.exception.OCRException
 import java.io.File
 
@@ -57,6 +58,20 @@ class OCREngine() {
         outputImg = input.copy(Bitmap.Config.ARGB_8888, true)
         if (config.drawPosBox) drawBox(outputImg, exec)
         return exec
+    }
+
+    fun detect(temp: Bitmap, origin: Bitmap): String {
+        val start = System.currentTimeMillis()
+        val detect = ocr.detect(temp, origin)
+        val end = System.currentTimeMillis()
+        Log.e("耗时", "${end - start}")
+        var res = "detect为空"
+        if (detect.isNotEmpty()) {
+            res =
+                "1:x:${detect[0]},y:${detect[1]},2:x:${detect[2]},y:${detect[3]},3:x:${detect[4]},y:${detect[5]},4:x:${detect[6]},y:${detect[7]}"
+        }
+        Log.e("检测匹配", res);
+        return res
     }
 
     private fun pickWords(results: ArrayList<OCRResultModel>): ArrayList<OCRResultModel> {
