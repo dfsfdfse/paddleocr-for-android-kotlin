@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import realcool.ocr.engine.*
+import realcool.ocr.utils.FileUtils
 
 class MainActivity : AppCompatActivity() {
     private lateinit var ocr: OCR
@@ -40,7 +41,7 @@ class MainActivity : AppCompatActivity() {
 
         startBtn.setOnClickListener {
             resultText.text = "开始识别"
-            val bitmap = BitmapFactory.decodeResource(resources, R.drawable.test4)
+            val bitmap = BitmapFactory.decodeResource(resources, R.drawable.s1)
             ocr.exec(bitmap, object : OCRExecCallback {
                 override fun onSuccess(result: OCRResult) {
                     var text = ""
@@ -61,8 +62,10 @@ class MainActivity : AppCompatActivity() {
         }
         startDetect.setOnClickListener {
             resultText.text = "开始检测"
-            val temp = BitmapFactory.decodeResource(resources, R.drawable.s3)
-            val origin = BitmapFactory.decodeResource(resources, R.drawable.renwu)
+            val temp = FileUtils.getAssetsByFilename(this, "images/s3.png")
+            val origin = FileUtils.getAssetsByFilename(this, "images/renwu.jpg")
+            Log.e("s1:","temp: width${temp.width}, height: ${temp.height}")
+            Log.e("renwu:","origin: width${origin.width}, height: ${origin.height}")
             ocr.detect(temp, origin, object : OCRDetectCallback {
                 override fun onSuccess(result: String) {
                     resultText.text = result

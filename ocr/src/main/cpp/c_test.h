@@ -27,11 +27,13 @@ inline void bitmap_mat(JNIEnv *env, jobject &bitmap, Mat &mat) {
         dst.create(info.height, info.width, CV_8UC4);
         if (info.format == ANDROID_BITMAP_FORMAT_RGBA_8888) {
             //LOGD("nBitmapToMat: RGBA_8888 -> CV_8UC4");
+            LOGE("bitmap: width: %d, height: %d", info.width, info.height);
             Mat tmp(info.height, info.width, CV_8UC4, pixels);
             tmp.copyTo(dst);
         } else {
             // info.format == ANDROID_BITMAP_FORMAT_RGB_565
             //LOGD("nBitmapToMat: RGB_565 -> CV_8UC4");
+            LOGE("bitmap: width: %d, height: %d", info.width, info.height);
             Mat tmp(info.height, info.width, CV_8UC2, pixels);
             cvtColor(tmp, dst, COLOR_BGR5652RGBA);
         }
@@ -144,14 +146,16 @@ inline std::vector<int> detect(Mat temp, Mat origin) {
         LOGE("The time was: %f\n", (double) (end2 - start) / CLOCKS_PER_SEC);
         std::vector<Point2f> corners(4);
         std::vector<Point2f> scene_corners(4);
+
+        LOGE("cols: %d,rows: %d, size: %D", temp.cols, temp.rows, temp.size);
         corners[0] = Point2f(0, 0);
         corners[1] = Point2f(temp.cols, 0);
         corners[2] = Point2f(temp.cols, temp.rows);
         corners[3] = Point2f(0, temp.rows);
-
         perspectiveTransform(corners, scene_corners, res);
-        for (int i = 0; i < scene_corners.size(); ++i) {
-            LOGE("x: %d,y: %d", scene_corners[i].x, scene_corners[i].y);
+        LOGE("cols: %d,rows: %d, size: %D", temp.cols, temp.rows,temp.size);
+        for (int i = 0; i < scene_corners.size(); i++) {
+            LOGE("x: %f,y: %f", scene_corners[i].x, scene_corners[i].y);
             result.push_back(scene_corners[i].x);
             result.push_back(scene_corners[i].y);
         }

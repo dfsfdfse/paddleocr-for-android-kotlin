@@ -42,17 +42,17 @@ class OCRNative(
     ): ArrayList<OCRResultModel> {
         val results: ArrayList<OCRResultModel> = ArrayList()
         var begin = 0
-        val forward = forward(
+        val raw = forward(
             pointer, img, detLongSize,
             if (runDet) 1 else 0,
             if (runCls) 1 else 0,
             if (runRec) 1 else 0
         )
-        while (begin < forward.size) {
-            val pointNum = forward[begin].roundToInt()
-            val wordNum = forward[begin + 1].roundToInt()
+        while (begin < raw.size) {
+            val pointNum = raw[begin].roundToInt()
+            val wordNum = raw[begin + 1].roundToInt()
             val res = parse(
-                forward,
+                raw,
                 begin + 2,
                 pointNum,
                 wordNum
@@ -103,7 +103,7 @@ class OCRNative(
         maxSizeLen: Int,
         runDet: Int,
         runCls: Int,
-        runRec: Int
+        runRec: Int,
     ): FloatArray
 
     private external fun release(pointer: Long)

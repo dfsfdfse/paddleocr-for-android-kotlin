@@ -91,7 +91,4 @@
 #ifdef HAVE_OPENCV_VIDEOIO
 #include "opencv2/videoio.hpp"
 #endif
-#ifdef HAVE_OPENCV_XFEATURE2D
-#include "opencv2/xfeatures2d.hpp"
-#endif
 #endif

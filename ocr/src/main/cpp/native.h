@@ -67,6 +67,16 @@ inline jfloatArray cpp_array_to_jfloatarray(JNIEnv *env, const float *buf,
   return result;
 }
 
+inline jdoubleArray cpp_array_to_jdoublearray(JNIEnv *env, const double *buf,
+                                            int64_t len) {
+  if (len == 0) {
+    return env->NewDoubleArray(0);
+  }
+  jdoubleArray result = env->NewDoubleArray(len);
+  env->SetDoubleArrayRegion(result, 0, len, buf);
+  return result;
+}
+
 inline jintArray cpp_array_to_jintarray(JNIEnv *env, const int *buf,
                                         int64_t len) {
   jintArray result = env->NewIntArray(len);
